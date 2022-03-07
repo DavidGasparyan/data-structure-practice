@@ -702,7 +702,6 @@ class LinkedListTest {
 
             assertFalse(iterator.hasNext());
           }
-
         }
       }
     }
