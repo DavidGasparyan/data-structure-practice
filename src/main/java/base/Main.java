@@ -11,13 +11,13 @@ public class Main {
       linkedList.addLast(item);
     }
 
-//    Iterator<Integer> linkedListIterator = linkedList.iterator();
-//
-//    while (linkedListIterator.hasNext()) {
-//      System.out.println(linkedListIterator.next());
-//    }
+    Iterator<Integer> linkedListIterator = linkedList.reverseIterator();
 
-    linkedList.empty();
-    linkedList.print();
+    while (linkedListIterator.hasNext()) {
+      System.out.println(linkedListIterator.next());
+    }
+
+//    linkedList.empty();
+//    linkedList.print();
   }
 }

@@ -608,5 +608,103 @@ class LinkedListTest {
       }
 
     }
+
+    @Nested
+    class TestReverseIterator {
+      Iterator<Integer> iterator;
+
+      @BeforeEach
+      @Description("List reverse iterator instance")
+      void iterator() {
+        iterator = linkedList.reverseIterator();
+      }
+
+      @Test
+      @Description("Return null if iterator next on empty list")
+      void returnNullOnEmptyListNext() {
+        assertNull(iterator.next());
+      }
+
+      @Test
+      @Description("Return null if iterator next on empty list")
+      void isNextElementAvailable() {
+        assertFalse(iterator.hasNext());
+      }
+
+      @Test
+      @Description("Check if size is 0")
+      void checkSizeZero() {
+        assertEquals(0, linkedList.size());
+      }
+
+      @Nested
+      class ReverseIteratorWithOneItem {
+        int randNumber = (int) (Math.random() * 100);
+
+        @BeforeEach
+        void addItem() {
+          linkedList.addFirst(randNumber);
+        }
+
+        @BeforeEach
+        @Description("Re instantiate reverse iterator to get updated list reference")
+        void iterator() {
+          iterator = linkedList.reverseIterator();
+        }
+
+        @Test
+        @Description("Iterator get first item")
+        void getNextItem() {
+          assertEquals(randNumber, iterator.next());
+        }
+
+        @Test
+        @Description("Iterator hasNext must return true if element exists")
+        void isNextAvailable() {
+          assertTrue(iterator.hasNext());
+        }
+
+        @Nested
+        class PopulatedListIterator {
+          int[] intArr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+          @BeforeEach
+          void populateList() {
+            linkedList.empty();
+
+            for(int item: intArr) {
+              linkedList.addLast(item);
+            }
+          }
+
+          @BeforeEach
+          @Description("Re instantiate reverse iterator to get updated list reference")
+          void iterator() {
+            iterator = linkedList.reverseIterator();
+          }
+
+          @Test
+          @Description("Iterator get items")
+          void getNextItem() {
+            for(int i = intArr.length - 1; i >= 0; i --) {
+              assertEquals(intArr[i], iterator.next());
+            }
+          }
+
+          @Test
+          @Description("Iterator get items")
+          void isNextItemAvailable() {
+            for(int i = intArr.length - 1; i >= 0; i --) {
+              assertTrue(iterator.hasNext());
+
+              iterator.next();
+            }
+
+            assertFalse(iterator.hasNext());
+          }
+
+        }
+      }
+    }
   }
 }

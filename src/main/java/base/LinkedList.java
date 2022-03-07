@@ -250,14 +250,30 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
   }
 
   protected class ReverseIterator implements Iterator<E> {
-    @Override
-    public E next() {
-      return null;
-    }
+    int index = size;
 
     @Override
     public boolean hasNext() {
-      return false;
+      return index > 0;
+    }
+
+    @Override
+    public E next() {
+      if(hasNext()) {
+        int tempIndex = index;
+        Node<E> tempNode = first;
+
+        while (tempIndex > 1) {
+          tempNode = tempNode.next;
+          tempIndex --;
+        }
+
+        index --;
+
+        return tempNode.element;
+      }
+
+      return null;
     }
   }
 
