@@ -1,4 +1,6 @@
-public class LinkedList<E> implements List<E> {
+package base;
+
+public class LinkedList<E> implements List<E>, Iterable<E> {
   private Node<E> first;
   private Node<E> last;
   private int size = 0;
@@ -225,7 +227,58 @@ public class LinkedList<E> implements List<E> {
     size --;
   }
 
-  public void remove(E element) {
+  public void empty() {
+    for (Node<E> pointer = last; pointer != null;) {
+      Node<E> next = pointer.next;
 
+      pointer.element = null;
+      pointer.next = null;
+
+      pointer = next;
+    }
+
+    first = last = null;
+    size = 0;
+  }
+
+  public Iterator<E> iterator() {
+    return new LinkedListIterator();
+  }
+
+  public Iterator<E> reverseIterator() {
+    return new ReverseIterator();
+  }
+
+  protected class ReverseIterator implements Iterator<E> {
+    @Override
+    public E next() {
+      return null;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return false;
+    }
+  }
+
+  protected class LinkedListIterator implements Iterator<E> {
+    private Node<E> pointer = first;
+
+    @Override
+    public boolean hasNext() {
+      return pointer != null;
+    }
+
+    @Override
+    public E next() {
+      if (hasNext()) {
+        Node<E> tempNode = pointer;
+        pointer = pointer.next;
+
+        return tempNode.element;
+      }
+
+      return null;
+    }
   }
 }

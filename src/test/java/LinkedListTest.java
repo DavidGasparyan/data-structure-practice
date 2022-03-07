@@ -1,3 +1,5 @@
+import base.Iterator;
+import base.LinkedList;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +13,7 @@ class LinkedListTest {
   private LinkedList<Integer> linkedList;
 
   @Test
-  @DisplayName("Is instanced with new LinkedList()")
+  @DisplayName("Is instanced with new base.LinkedList()")
   void isInstantiatedWithNew() {
     new LinkedList<>();
   }
@@ -506,6 +508,105 @@ class LinkedListTest {
           assertEquals(9, linkedList.get(0));
         }
       }
+    }
+
+    @Nested
+    class TestIterator {
+      Iterator<Integer> iterator;
+
+      @BeforeEach
+      @Description("List iterator instance")
+      void iterator() {
+        iterator = linkedList.iterator();
+      }
+
+      @Test
+      @Description("Return null if iterator next on empty list")
+      void returnNullOnEmptyListNext() {
+        assertNull(iterator.next());
+      }
+
+      @Test
+      @Description("Return null if iterator next on empty list")
+      void isNextElementAvailable() {
+        assertFalse(iterator.hasNext());
+      }
+
+      @Test
+      @Description("Check if size is 0")
+      void checkSizeZero() {
+        assertEquals(0, linkedList.size());
+      }
+
+      @Nested
+      class IteratorWithOneItem {
+        int randNumber = (int) (Math.random() * 100);
+
+        @BeforeEach
+        void addItem() {
+          linkedList.addFirst(randNumber);
+        }
+
+        @BeforeEach
+        @Description("Re instantiate iterator to get updated list reference")
+        void iterator() {
+          iterator = linkedList.iterator();
+        }
+
+        @Test
+        @Description("Iterator get first item")
+        void getNextItem() {
+          assertEquals(randNumber, iterator.next());
+        }
+
+        @Test
+        @Description("Iterator hasNext must return true if element exists")
+        void isNextAvailable() {
+          assertTrue(iterator.hasNext());
+        }
+
+        @Nested
+        class PopulatedListIterator {
+          int[] intArr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+          @BeforeEach
+          void populateList() {
+            linkedList.empty();
+
+            for(int item: intArr) {
+              linkedList.addLast(item);
+            }
+          }
+
+          @BeforeEach
+          @Description("Re instantiate iterator to get updated list reference")
+          void iterator() {
+            iterator = linkedList.iterator();
+          }
+
+          @Test
+          @Description("Iterator get items")
+          void getNextItem() {
+            for(int item: intArr) {
+              assertEquals(item, iterator.next());
+            }
+          }
+
+          @Test
+          @Description("Iterator get items")
+          void isNextItemAvailable() {
+            for(int item: intArr) {
+              assertTrue(iterator.hasNext());
+
+              iterator.next();
+            }
+
+            assertFalse(iterator.hasNext());
+          }
+
+        }
+      }
+
     }
   }
 }
