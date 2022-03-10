@@ -1,6 +1,6 @@
 package base;
 
-public interface ListADT<T> {
+public interface ListADT<T> extends Collection<T> {
     void addFirst(T e);
     T removeFirst();
     void addLast(T e);
