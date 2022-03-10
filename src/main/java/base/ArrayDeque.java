@@ -25,8 +25,7 @@ public class ArrayDeque<E> implements Deque<E> {
         }
 
         if (front == -1) {
-            front = 0;
-            rear = 0;
+            front = rear = 0;
         } else {
             front = (front - 1 + elements.length) % elements.length;
         }
@@ -44,8 +43,7 @@ public class ArrayDeque<E> implements Deque<E> {
         }
 
         if (front == -1 && rear == -1) {
-            front = 0;
-            rear = 0;
+            front = rear = 0;
         } else {
             rear = (++ rear) % elements.length;
         }
@@ -70,8 +68,7 @@ public class ArrayDeque<E> implements Deque<E> {
         // If front and rear are equal then
         // this is the last element in the array
         if (front == rear) {
-            front = -1;
-            rear = -1;
+            front = rear = -1;
         } else {
             // Move front pointer position
             front = (++ front) % elements.length;
@@ -97,8 +94,7 @@ public class ArrayDeque<E> implements Deque<E> {
         // If front and rear are equal then
         // this is the last element in the array
         if (front == rear) {
-            front = -1;
-            rear = -1;
+            front = rear = -1;
         } else {
             // Move end pointer position
             rear = (rear - 1 + elements.length) % elements.length;
@@ -158,9 +154,15 @@ public class ArrayDeque<E> implements Deque<E> {
 
     @Override
     public void print() {
-        for (E element: elements) {
-            System.out.println(element);
+        int start = front;
+
+        while (start != rear) {
+            System.out.println(elements[start]);
+
+            start = (++ start) % elements.length;
         }
+
+        System.out.println(elements[rear]);
     }
 
     @Override
@@ -188,12 +190,12 @@ public class ArrayDeque<E> implements Deque<E> {
     }
 
     private class ArrayDequeIterator implements Iterator<E> {
-        int tempSize = size;
+        int remaining = size;
         int tempFirst = front;
 
         @Override
         public boolean hasNext() {
-            return tempSize > 0;
+            return remaining > 0;
         }
 
         @Override
@@ -202,7 +204,7 @@ public class ArrayDeque<E> implements Deque<E> {
 
             E tempElement = elements[tempFirst];
 
-            tempSize --;
+            remaining --;
             tempFirst = (++ tempFirst) % elements.length;
 
             return tempElement;
