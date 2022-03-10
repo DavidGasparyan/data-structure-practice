@@ -1,5 +1,5 @@
 package base;
 
-public interface Iterable<T> {
-  public Iterator<T> iterator();
+public interface Iterable<E> {
+  Iterator<E> iterator();
 }

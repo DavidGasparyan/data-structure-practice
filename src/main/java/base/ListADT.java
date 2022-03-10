@@ -1,11 +1,11 @@
 package base;
 
-public interface ListADT<T> extends Collection<T> {
-    void addFirst(T e);
-    T removeFirst();
-    void addLast(T e);
-    T removeLast();
-    T first();
-    T last();
-    boolean replace(T e, T r);
+public interface ListADT<E> extends Collection<E> {
+    void addFirst(E e);
+    E removeFirst();
+    void addLast(E e);
+    E removeLast();
+    E first();
+    E last();
+    boolean replace(E e, E r);
 }

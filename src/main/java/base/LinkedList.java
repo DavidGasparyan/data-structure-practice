@@ -3,7 +3,7 @@ package base;
 public class LinkedList<E> implements ListADT<E> {
   private Node<E> first;
   private Node<E> last;
-  private int size=0;
+  private int size = 0;
 
   private static class Node<E> {
     Node<E> next;

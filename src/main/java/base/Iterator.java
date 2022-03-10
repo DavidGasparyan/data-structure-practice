@@ -1,6 +1,6 @@
 package base;
 
-public interface Iterator<T> {
-  T next();
+public interface Iterator<E> {
+  E next();
   boolean hasNext();
 }
