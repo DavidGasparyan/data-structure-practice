@@ -1,5 +1,8 @@
 package base;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 public class ArrayDeque<E> implements Deque<E> {
     private E[] elements;
     private int front = -1;
@@ -108,22 +111,31 @@ public class ArrayDeque<E> implements Deque<E> {
 
     @Override
     public E getFirst() {
-        return null;
+        if (front == -1) {
+            throw new NoSuchElementException();
+        }
+
+        return elements[front];
     }
 
     @Override
     public E getLast() {
-        return null;
+        if (rear == -1) {
+            throw new NoSuchElementException();
+        }
+
+        return elements[rear];
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        addLast(e);
+        return true;
     }
 
     @Override
     public E remove() {
-        return null;
+        return removeFirst();
     }
 
     @Override
@@ -133,12 +145,15 @@ public class ArrayDeque<E> implements Deque<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public void empty() {
-
+        Arrays.fill(elements, null);
+        size = 0;
+        front = -1;
+        rear = -1;
     }
 
     @Override
