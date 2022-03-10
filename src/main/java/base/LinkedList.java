@@ -1,9 +1,9 @@
 package base;
 
-public class LinkedList<E> implements List<E>, Iterable<E> {
+public class LinkedList<E> implements ListADT<E> {
   private Node<E> first;
   private Node<E> last;
-  private int size = 0;
+  private int size=0;
 
   private static class Node<E> {
     Node<E> next;
@@ -25,34 +25,50 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     }
   }
 
-  public LinkedList () {}
+  public LinkedList() {
+  }
 
-  public void addFirst(E element) {
-    final Node<E> tempFirst = first;
-    final Node<E> newNode = new Node<E>(element, tempFirst);
-
-    first = newNode;
-
-    if (first == null) {
-      last = newNode;
+  @Override
+  public E first() {
+    if (first != null) {
+      return first.element;
     }
 
-    size ++;
+    return  null;
+  }
+
+  @Override
+  public E last() {
+    if (last != null) {
+      return last.element;
+    }
+
+    return  null;
+  }
+
+  public void addFirst(E element) {
+    final Node<E> newNode = new Node<E>(element, first);
+
+    if (first == null) {
+      first = last = newNode;
+    } else {
+      first = newNode;
+    }
+
+    size++;
   }
 
   public void addLast(E element) {
-    final Node<E> tempLast = last;
     final Node<E> newNode = new Node<E>(element, null);
 
-    last = newNode;
-
     if (first == null) {
-      first = newNode;
+      first = last = newNode;
     } else {
-      tempLast.next = newNode;
+      last.next = newNode;
+      last = newNode;
     }
 
-    size ++;
+    size++;
   }
 
   public E removeFirst() {
@@ -70,7 +86,7 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
       last = null;
     }
 
-    size --;
+    size--;
 
     return element;
   }
@@ -100,7 +116,7 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
       previousNode.next = null;
     }
 
-    size --;
+    size--;
 
     return element;
   }
@@ -120,9 +136,9 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
 
     Node<E> tempNode = first;
 
-    while(index > 0) {
+    while (index > 0) {
       tempNode = tempNode.next;
-      index --;
+      index--;
     }
 
     return tempNode.element;
@@ -141,10 +157,10 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     Node<E> previousNode = null;
     Node<E> nextNode = first;
 
-    while(index > 0) {
+    while (index > 0) {
       previousNode = nextNode;
       nextNode = nextNode.next;
-      index --;
+      index--;
     }
 
     previousNode.next = new Node<>(element, nextNode);
@@ -175,11 +191,11 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     while (index > 1) {
       previousNode = currentNode;
       currentNode = currentNode.next;
-      index --;
+      index--;
     }
 
     previousNode.next = new Node<>(element, currentNode);
-    size ++;
+    size++;
   }
 
   public void insertAfter(E element, int index) {
@@ -201,7 +217,7 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     }
 
     currentNode.next = new Node<>(element, nextNode);
-    size ++;
+    size++;
   }
 
   public void remove(int index) {
@@ -224,11 +240,29 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     }
 
     beforeNode.next = currentNode.next;
-    size --;
+    size--;
+  }
+
+  @Override
+  public boolean replace(E e, E r)  {
+    if (first != null) {
+      Node<E> tempNode = first;
+
+      while (tempNode != null) {
+        if (tempNode.element.equals(e)) {
+          tempNode.element = r;
+          return true;
+        }
+
+        tempNode = tempNode.next;
+      }
+    }
+
+    return false;
   }
 
   public void empty() {
-    for (Node<E> pointer = last; pointer != null;) {
+    for (Node<E> pointer = last; pointer != null; ) {
       Node<E> next = pointer.next;
 
       pointer.element = null;
@@ -259,16 +293,16 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
 
     @Override
     public E next() {
-      if(hasNext()) {
+      if (hasNext()) {
         int tempIndex = index;
         Node<E> tempNode = first;
 
         while (tempIndex > 1) {
           tempNode = tempNode.next;
-          tempIndex --;
+          tempIndex--;
         }
 
-        index --;
+        index--;
 
         return tempNode.element;
       }
@@ -298,3 +332,4 @@ public class LinkedList<E> implements List<E>, Iterable<E> {
     }
   }
 }
+
