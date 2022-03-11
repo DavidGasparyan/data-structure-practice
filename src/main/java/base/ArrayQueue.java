@@ -47,20 +47,18 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     public void dequeue() {
-        if (front == -1 && rear == -1) {
-            return;
+        if (!isEmpty()) {
+            elements[front] = null;
+
+            if (front == rear) {
+                front = -1;
+                rear = -1;
+            } else {
+                front = (++front) % elements.length;
+            }
+
+            size--;
         }
-
-        elements[front] = null;
-
-        if (front == rear) {
-            front = -1;
-            rear = -1;
-        } else {
-            front = (++ front) % elements.length;
-        }
-
-        size --;
     }
 
     private void doubleCapacity() {
