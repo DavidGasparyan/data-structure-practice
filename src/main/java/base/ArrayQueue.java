@@ -76,6 +76,10 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
+
         return elements[front];
     }
 
