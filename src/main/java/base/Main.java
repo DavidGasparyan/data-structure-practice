@@ -3,46 +3,24 @@ package base;
 public class Main {
 
   public static void main(String[] args) {
-    ArrayDeque<Integer> deque = new ArrayDeque<>();
+    ArrayQueue<Integer> queue = new ArrayQueue<>();
 
-    deque.addFirst(1);
-    deque.addFirst(2);
-    deque.addFirst(3);
-    deque.addFirst(4);
-    deque.addFirst(12);
-    deque.addFirst(5);
-    deque.addFirst(6);
-    deque.addFirst(7);
-    deque.addFirst(8);
-    deque.addFirst(9);
-    deque.addFirst(10);
-    deque.addFirst(11);
-    deque.addLast(11);
-    deque.addLast(11);
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.enqueue(5);
+    queue.enqueue(6);
+    queue.enqueue(7);
+    queue.enqueue(8);
+    queue.enqueue(9);
+    queue.enqueue(10);
 
-//    deque.removeFirst();
-//    deque.removeFirst();
-//    deque.removeFirst();
-//    deque.removeFirst();
-
-//    deque.removeLast();
-//    deque.removeLast();
-//    deque.removeLast();
-//    deque.removeLast();
-
-    deque.print();
-    System.out.println("----- Size ------");
-    /**
-     *  rear = element(6)
-     *  front = element(3)
-     */
-
-//    System.out.println(deque.size());
-
-    Iterator<Integer> iterator = deque.iterator();
+    Iterator<Integer> iterator = queue.iterator();
 
     while (iterator.hasNext()) {
       System.out.println(iterator.next());
     }
+
   }
 }
