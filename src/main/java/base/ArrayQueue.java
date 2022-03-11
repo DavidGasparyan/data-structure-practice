@@ -1,5 +1,7 @@
 package base;
 
+import java.util.Arrays;
+
 public class ArrayQueue<E> implements Queue<E> {
     private E[] elements;
     private int front = -1;
@@ -74,7 +76,7 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public E peek() {
-        return null;
+        return elements[front];
     }
 
     @Override
@@ -84,7 +86,11 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public void empty() {
+        Arrays.fill(elements, null);
 
+        front = -1;
+        rear = -1;
+        size = 0;
     }
 
     @Override
