@@ -91,7 +91,7 @@ public class LinkedListQueue<E> implements Queue<E> {
 
     private class LinkedListQueueIterator implements Iterator<E> {
         private int remainder = size();
-        private Node<E> end = last;
+        private Node<E> start = first;
 
         @Override
         public boolean hasNext() {
@@ -102,21 +102,8 @@ public class LinkedListQueue<E> implements Queue<E> {
         public E next() {
             assert hasNext();
 
-            Node<E> previous = null;
-            Node<E> current = first;
-            Node<E> temp = end;
-
-            while(current != null) {
-
-                if (current == end) {
-                    break;
-                }
-
-                previous = current;
-                current = current.next;
-            }
-
-            end = previous;
+            Node<E> temp = start;
+            start = start.next;
             remainder --;
 
             return temp.element;
