@@ -36,7 +36,9 @@ public class LinkedListQueue<E> implements Queue<E> {
                 first = null;
                 last = null;
             } else {
-                first = first.next;
+                Node<E> tempNode = first;
+                first = null;
+                first = tempNode.next;
             }
 
             size --;
