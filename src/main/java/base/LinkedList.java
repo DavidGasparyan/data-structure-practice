@@ -163,6 +163,8 @@ public class LinkedList<E> implements ListADT<E> {
       index--;
     }
 
+    size ++;
+
     previousNode.next = new Node<>(element, nextNode);
   }
 
