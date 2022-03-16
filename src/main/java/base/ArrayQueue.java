@@ -33,6 +33,22 @@ public class ArrayQueue<E> implements Queue<E> {
         elements[front] = e;
     }
 
+    private void addLast(E e) {
+        if (size == elements.length) {
+            doubleCapacity();
+        }
+
+        if (front == -1 && rear == -1) {
+            front = 0;
+            rear = 0;
+        } else {
+            rear = (++rear) % elements.length;
+        }
+
+        size ++;
+        elements[rear] = e;
+    }
+
     public void dequeue() {
         if (!isEmpty()) {
             elements[rear] = null;
@@ -68,6 +84,42 @@ public class ArrayQueue<E> implements Queue<E> {
         elements = tempElements;
     }
 
+    private boolean addAt(E e, int index) {
+        if (index > size || index < 0) {
+            return false;
+        }
+
+        if (index == front) {
+            enqueue(e);
+            return true;
+        }
+
+        if (index == rear) {
+            addLast(e);
+            return true;
+        }
+
+        size++;
+
+        if (size == elements.length) {
+            doubleCapacity();
+        }
+
+        int pointer = front;
+
+        while(index > 0) {
+            pointer = (pointer - 1 + elements.length) % elements.length;
+            index --;
+        }
+
+        // Case when index is front position
+        // Case when index is rear position
+        // Case when in between
+        // Case when array needs to resize;
+
+
+        return true;
+    }
 
     @Override
     public E peek() {
@@ -137,7 +189,7 @@ public class ArrayQueue<E> implements Queue<E> {
             E currentElement = elements[next];
 
             remainder --;
-            next ++;
+            next = (++next) % elements.length;
 
             return currentElement;
         }

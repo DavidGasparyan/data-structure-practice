@@ -20,7 +20,10 @@ public class Main {
     queue.add(12);
     queue.add(13);
 
-    queue.print();
+//    queue.print();
+
+//    System.out.println(queue.first());
+//    System.out.println(queue.last());
 
 
 //    Iterator<Integer> iterator = queue.iterator();
