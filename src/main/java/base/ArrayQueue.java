@@ -16,21 +16,6 @@ public class ArrayQueue<E> implements Queue<E> {
         elements = (E []) new Object[size];
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean add(E e) {
-        return false;
-    }
-
-    @Override
-    public E remove() {
-        return null;
-    }
-
     public void enqueue(E e) {
 
         if (size == elements.length) {
@@ -41,36 +26,46 @@ public class ArrayQueue<E> implements Queue<E> {
             front = 0;
             rear = 0;
         } else {
-            rear = (++ rear) % elements.length;
+            front = (front - 1 + elements.length) % elements.length;
         }
 
         size ++;
-        elements[rear] = e;
+        elements[front] = e;
     }
 
     public void dequeue() {
         if (!isEmpty()) {
-            elements[front] = null;
+            elements[rear] = null;
 
             if (front == rear) {
                 front = -1;
                 rear = -1;
             } else {
-                front = (++front) % elements.length;
+                rear = (rear - 1 + elements.length) % elements.length;
             }
 
             size--;
         }
     }
 
+    public E first() {
+        return elements[front];
+    }
+
+    public E last() {
+        return elements[rear];
+    }
+
     private void doubleCapacity() {
-        E[] tempElement = (E[]) new Object[elements.length * 2];
+        E[] tempElements = (E[]) new Object[elements.length * 2];
 
-        for(int i = front; i <= rear; i ++) {
-            tempElement[i - front] = elements[i];
-        }
+        System.arraycopy(elements, front, tempElements, 0, elements.length - front);
+        System.arraycopy(elements, 0, tempElements, elements.length - front, front);
 
-        elements = tempElement;
+
+        front = 0;
+        rear = elements.length - 1;
+        elements = tempElements;
     }
 
 
@@ -99,9 +94,27 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public void print() {
-        for(int i = front; i <= rear; i ++) {
+        for( int i = front; i != rear; i = (++i) % elements.length) {
             System.out.println(elements[i]);
         }
+
+        System.out.println(elements[rear]);
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean add(E e) {
+        enqueue(e);
+        return true;
+    }
+
+    @Override
+    public E remove() {
+        return null;
     }
 
     @Override
