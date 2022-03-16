@@ -78,13 +78,12 @@ public class ArrayQueue<E> implements Queue<E> {
         System.arraycopy(elements, front, tempElements, 0, elements.length - front);
         System.arraycopy(elements, 0, tempElements, elements.length - front, front);
 
-
         front = 0;
         rear = elements.length - 1;
         elements = tempElements;
     }
 
-    private boolean addAt(E e, int index) {
+    public boolean addAt(E e, int index) {
         if (index > size || index < 0) {
             return false;
         }
@@ -108,10 +107,16 @@ public class ArrayQueue<E> implements Queue<E> {
         int pointer = front;
 
         while(index > 0) {
-            pointer = (pointer - 1 + elements.length) % elements.length;
+            pointer = (++pointer) % elements.length;
             index --;
         }
+//
+//        System.out.println(front);
+//        System.out.println(rear);
+//        System.out.println(pointer);
 
+        System.arraycopy(elements, pointer, elements, pointer + 1, rear - pointer + 1);
+        elements[pointer] = e;
         // Case when index is front position
         // Case when index is rear position
         // Case when in between
@@ -151,6 +156,10 @@ public class ArrayQueue<E> implements Queue<E> {
         }
 
         System.out.println(elements[rear]);
+
+//        for( int i = 0; i < elements.length; i++) {
+//            System.out.println(elements[i]);
+//        }
     }
 
     @Override
