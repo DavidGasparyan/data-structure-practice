@@ -1,6 +1,6 @@
 package base;
 
-public class LinkedList<E> implements ListADT<E> {
+public class LinkedList<E> implements ListADT<E>, Iterable<E> {
   private Node<E> first;
   private Node<E> last;
   private int size = 0;
